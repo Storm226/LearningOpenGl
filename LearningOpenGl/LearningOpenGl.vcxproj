@@ -142,8 +142,10 @@
     <ClInclude Include="Shader.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="shader.fs" />
-    <None Include="shader.vs" />
+    <None Include="colors.fs" />
+    <None Include="colors.vs" />
+    <None Include="light.fs" />
+    <None Include="light.vs" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="..\..\..\..\..\..\Downloads\container.jpg" />
