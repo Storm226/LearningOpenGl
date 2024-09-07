@@ -93,47 +93,49 @@ int main()
     // set up vertex data (and buffer(s)) and configure vertex attributes
    // ------------------------------------------------------------------
     float vertices[] = {
-      -0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
-       0.5f, -0.5f, -0.5f,  1.0f, 0.0f,
-       0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-       0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-      -0.5f,  0.5f, -0.5f,  0.0f, 1.0f,
-      -0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
 
-      -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-       0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
-       0.5f,  0.5f,  0.5f,  1.0f, 1.0f,
-       0.5f,  0.5f,  0.5f,  1.0f, 1.0f,
-      -0.5f,  0.5f,  0.5f,  0.0f, 1.0f,
-      -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+    // 3x1 position, 2x1 texture, 3x1 normals
+      -0.5f, -0.5f, -0.5f,  0.0f, 0.0f,     0.0f, 0.0f, -1.0f,
+       0.5f, -0.5f, -0.5f,  1.0f, 0.0f,     0.0f, 0.0f, -1.0f,
+       0.5f,  0.5f, -0.5f,  1.0f, 1.0f,     0.0f, 0.0f, -1.0f,
+       0.5f,  0.5f, -0.5f,  1.0f, 1.0f,     0.0f, 0.0f, -1.0f,
+      -0.5f,  0.5f, -0.5f,  0.0f, 1.0f,     0.0f, 0.0f, -1.0f,
+      -0.5f, -0.5f, -0.5f,  0.0f, 0.0f,     0.0f, 0.0f, -1.0f,
 
-      -0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-      -0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-      -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-      -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-      -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-      -0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+      -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,     0.0f, 0.0f, 1.0f,
+       0.5f, -0.5f,  0.5f,  1.0f, 0.0f,     0.0f, 0.0f, 1.0f,
+       0.5f,  0.5f,  0.5f,  1.0f, 1.0f,     0.0f, 0.0f, 1.0f,  
+       0.5f,  0.5f,  0.5f,  1.0f, 1.0f,     0.0f, 0.0f, 1.0f,
+      -0.5f,  0.5f,  0.5f,  0.0f, 1.0f,     0.0f, 0.0f, 1.0f,
+      -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,     0.0f, 0.0f, 1.0f,
 
-       0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-       0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-       0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-       0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-       0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-       0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+      -0.5f,  0.5f,  0.5f,  1.0f, 0.0f,     -1.0f, 0.0f, 0.0f,
+      -0.5f,  0.5f, -0.5f,  1.0f, 1.0f,     -1.0f, 0.0f, 0.0f,
+      -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,     -1.0f, 0.0f, 0.0f,
+      -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,     -1.0f, 0.0f, 0.0f,
+      -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,     -1.0f, 0.0f, 0.0f,
+      -0.5f,  0.5f,  0.5f,  1.0f, 0.0f,     -1.0f, 0.0f, 0.0f,
 
-      -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-       0.5f, -0.5f, -0.5f,  1.0f, 1.0f,
-       0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
-       0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
-      -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-      -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+       0.5f,  0.5f,  0.5f,  1.0f, 0.0f,     1.0f, 0.0f, 0.0f,
+       0.5f,  0.5f, -0.5f,  1.0f, 1.0f,     1.0f, 0.0f, 0.0f,
+       0.5f, -0.5f, -0.5f,  0.0f, 1.0f,     1.0f, 0.0f, 0.0f,
+       0.5f, -0.5f, -0.5f,  0.0f, 1.0f,     1.0f, 0.0f, 0.0f,
+       0.5f, -0.5f,  0.5f,  0.0f, 0.0f,     1.0f, 0.0f, 0.0f,
+       0.5f,  0.5f,  0.5f,  1.0f, 0.0f,     1.0f, 0.0f, 0.0f,
 
-      -0.5f,  0.5f, -0.5f,  0.0f, 1.0f,
-       0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-       0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-       0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-      -0.5f,  0.5f,  0.5f,  0.0f, 0.0f,
-      -0.5f,  0.5f, -0.5f,  0.0f, 1.0f
+      -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,     0.0f, - 1.0f, 0.0f,
+       0.5f, -0.5f, -0.5f,  1.0f, 1.0f,     0.0f, -1.0f, 0.0f,
+       0.5f, -0.5f,  0.5f,  1.0f, 0.0f,     0.0f, -1.0f, 0.0f,
+       0.5f, -0.5f,  0.5f,  1.0f, 0.0f,     0.0f, -1.0f, 0.0f,
+      -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,     0.0f, -1.0f, 0.0f,
+      -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,     0.0f, -1.0f, 0.0f,
+
+      -0.5f,  0.5f, -0.5f,  0.0f, 1.0f,     0.0f, 1.0f, 0.0f,
+       0.5f,  0.5f, -0.5f,  1.0f, 1.0f,     0.0f, 1.0f, 0.0f,
+       0.5f,  0.5f,  0.5f,  1.0f, 0.0f,     0.0f, 1.0f, 0.0f,
+       0.5f,  0.5f,  0.5f,  1.0f, 0.0f,     0.0f, 1.0f, 0.0f,
+      -0.5f,  0.5f,  0.5f,  0.0f, 0.0f,     0.0f, 1.0f, 0.0f,
+      -0.5f,  0.5f, -0.5f,  0.0f, 1.0f,     0.0f, 1.0f, 0.0f
     };
     glm::vec3 cubePositions[] = {
     glm::vec3(0.0f,  0.0f,  0.0f),
@@ -150,8 +152,8 @@ int main()
 
     unsigned int cubeVAO, lightVAO, VBO;
 
-    // VERTEX ARRAY OBJECT
-    // VERTEX BUFFER OBJECT
+    // VERTEX ARRAY OBJECT  : Dictates data retrieval/usage
+    // VERTEX BUFFER OBJECT : Holds vertices
     
     // ask openGL for vertex arrays and the vertex buffer
     glGenVertexArrays(1, &cubeVAO);
@@ -164,27 +166,31 @@ int main()
 
     glBindVertexArray(cubeVAO);
     // position attribute
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)0);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
     glEnableVertexAttribArray(0);
     // texture coord attribute
-    glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
+    glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(3 * sizeof(float)));
     glEnableVertexAttribArray(1);
+    // normal attribute
+    glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(5 * sizeof(float)));
+    glEnableVertexAttribArray(2);
 
     // second, configure the light's VAO (VBO stays the same; the vertices are the same for the light object which is also a 3D cube)
     glBindVertexArray(lightVAO); // bind so you can configure
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)0);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
     glEnableVertexAttribArray(0);
 
     // WIREFRAME MODE
-   // glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-    
-    unsigned int texture1, texture2;
+   //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+   
+
+    //unsigned int texture1, texture2;
     // Texture creation
-    generateTexture("math.jpg", texture1, false);
-    generateTexture("huh.jpg", texture2, false);
+    //generateTexture("math.jpg", texture1, false);
+    //generateTexture("huh.jpg", texture2, false);
     colorShader.use();
-    colorShader.setInt("texture1", 0);
-    colorShader.setInt("texture2", 1);
+    //colorShader.setInt("texture1", 0);
+    //colorShader.setInt("texture2", 1);
 
     // render loop
     // -----------
@@ -207,13 +213,13 @@ int main()
 
         // be sure to activate shader when setting uniforms/drawing objects
         colorShader.use();
-        colorShader.setVec3("objectColor", 1.0f, 1.0f, 1.0f);
+        colorShader.setVec3("objectColor", 1.0f, 0.5f, 0.31f);
         colorShader.setVec3("lightColor", 1.0f, 1.0f, 1.0f);
 
-        glActiveTexture(GL_TEXTURE0);
-        glBindTexture(GL_TEXTURE_2D, texture1);
-        glActiveTexture(GL_TEXTURE1);
-        glBindTexture(GL_TEXTURE_2D, texture2);
+      //  glActiveTexture(GL_TEXTURE0);
+      //  glBindTexture(GL_TEXTURE_2D, texture1);
+      //  glActiveTexture(GL_TEXTURE1);
+      //  glBindTexture(GL_TEXTURE_2D, texture2);
 
         // view/projection transformations
         glm::mat4 projection = glm::perspective(glm::radians(camera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
@@ -228,12 +234,14 @@ int main()
         glm::mat4 model = glm::mat4(1.0f);
         for (int i = 0; i < 10; i++) {
             model = glm::mat4(1.0f);
-            model = translate(model,  cubePositions[i]);
+            model = translate(model, cubePositions[i]);
             float angle = 20.0f * (i + 1) * glfwGetTime();
             model = rotate(model, glm::radians(angle), glm::vec3(1.0f, 0.3f, 0.5f));
             colorShader.setMat4("model", model);
-            glDrawArrays(GL_TRIANGLES, 0, 36 );
+            glDrawArrays(GL_TRIANGLES, 0, 36);
         }
+
+        colorShader.setVec3("lightPos", lightPos);
 
 
         // also draw the lamp object
