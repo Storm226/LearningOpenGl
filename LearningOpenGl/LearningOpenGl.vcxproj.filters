@@ -24,6 +24,12 @@
     <ClCompile Include="defStb.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="mesh.h">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Model.h">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="colors.fs">

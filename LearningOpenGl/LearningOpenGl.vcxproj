@@ -141,6 +141,8 @@
     <ClCompile Include="..\..\..\..\..\..\Downloads\glad\src\glad.c" />
     <ClCompile Include="defStb.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="mesh.h" />
+    <ClCompile Include="Model.h" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\..\..\..\Downloads\stb_image.h" />
