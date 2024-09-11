@@ -144,6 +144,22 @@
     <ClInclude Include="include\Shader.h" />
     <ClInclude Include="include\stb_image.h" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Shaders\Basic\colors.fs" />
+    <None Include="Shaders\Basic\colors.vs" />
+    <None Include="Shaders\Basic\phongLighting1.fs" />
+    <None Include="Shaders\Basic\phongLighting1.vs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Resources\awesomeface.png" />
+    <Image Include="Resources\container.jpg" />
+    <Image Include="Resources\container2.png" />
+    <Image Include="Resources\container2_specular.png" />
+    <Image Include="Resources\huh.jpg" />
+    <Image Include="Resources\matrix.jpg" />
+    <Image Include="Resources\pepe.jpg" />
+    <Image Include="Resources\Winky.png" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

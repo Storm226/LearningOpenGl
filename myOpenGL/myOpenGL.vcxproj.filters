@@ -16,6 +16,9 @@
     <Filter Include="Shaders">
       <UniqueIdentifier>{4eaa8113-eb93-445e-8eea-e1769c05602f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Shaders\Basic">
+      <UniqueIdentifier>{33d64a7f-0183-4ac1-a0f5-f7cb8ed075cd}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -44,5 +47,45 @@
     <ClInclude Include="include\stb_image.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Shaders\Basic\colors.vs">
+      <Filter>Shaders\Basic</Filter>
+    </None>
+    <None Include="Shaders\Basic\colors.fs">
+      <Filter>Shaders\Basic</Filter>
+    </None>
+    <None Include="Shaders\Basic\phongLighting1.vs">
+      <Filter>Shaders\Basic</Filter>
+    </None>
+    <None Include="Shaders\Basic\phongLighting1.fs">
+      <Filter>Shaders\Basic</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Resources\awesomeface.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Resources\container.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Resources\container2.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Resources\container2_specular.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Resources\huh.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Resources\matrix.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Resources\pepe.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Resources\Winky.png">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
 </Project>
