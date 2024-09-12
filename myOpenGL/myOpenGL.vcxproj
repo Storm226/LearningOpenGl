@@ -135,6 +135,7 @@
   <ItemGroup>
     <ClCompile Include="glad.c" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Shapes.cpp" />
     <ClCompile Include="src\Camera.cpp" />
     <ClCompile Include="src\defStb.cpp" />
     <ClCompile Include="src\Shader.cpp" />
@@ -142,6 +143,7 @@
   <ItemGroup>
     <ClInclude Include="include\Camera.h" />
     <ClInclude Include="include\Shader.h" />
+    <ClInclude Include="include\Shapes.h" />
     <ClInclude Include="include\stb_image.h" />
   </ItemGroup>
   <ItemGroup>
