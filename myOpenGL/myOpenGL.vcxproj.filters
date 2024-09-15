@@ -61,10 +61,10 @@
     <None Include="Shaders\Basic\colors.fs">
       <Filter>Shaders\Basic</Filter>
     </None>
-    <None Include="Shaders\Basic\phongLighting1.vs">
+    <None Include="Shaders\Basic\lights.vs">
       <Filter>Shaders\Basic</Filter>
     </None>
-    <None Include="Shaders\Basic\phongLighting1.fs">
+    <None Include="Shaders\Basic\lights.fs">
       <Filter>Shaders\Basic</Filter>
     </None>
   </ItemGroup>

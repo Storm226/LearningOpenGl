@@ -149,8 +149,8 @@
   <ItemGroup>
     <None Include="Shaders\Basic\colors.fs" />
     <None Include="Shaders\Basic\colors.vs" />
-    <None Include="Shaders\Basic\phongLighting1.fs" />
-    <None Include="Shaders\Basic\phongLighting1.vs" />
+    <None Include="Shaders\Basic\lights.fs" />
+    <None Include="Shaders\Basic\lights.vs" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Resources\awesomeface.png" />

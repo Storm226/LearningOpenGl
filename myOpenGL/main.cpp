@@ -40,71 +40,58 @@ int main()
 {
     if (!setUp())
         std::cout << "FAILURE DURING SETUP\n";
-    
+   
+    // Compile shaders
+    // ---------------
     Shader basicColor("Shaders/Basic/colors.vs", "Shaders/Basic/colors.fs");
-    Shader basicLight("Shaders/Basic/phongLighting1.vs", "Shaders/Basic/phongLighting1.fs");
+    Shader basicLight("Shaders/Basic/lights.vs", "Shaders/Basic/lights.fs");
 
     std::vector<float> vertices = Shapes::getCube();
 
-    glm::vec3 cubePositions[] = {
-    glm::vec3(0.0f,  0.0f,  0.0f),
-    glm::vec3(2.0f,  5.0f, -15.0f),
-    glm::vec3(-1.5f, -2.2f, -2.5f),
-    glm::vec3(-3.8f, -2.0f, -12.3f),
-    glm::vec3(2.4f, -0.4f, -3.5f),
-    glm::vec3(-1.7f,  3.0f, -7.5f),
-    glm::vec3(1.3f, -2.0f, -2.5f),
-    glm::vec3(1.5f,  2.0f, -2.5f),
-    glm::vec3(1.5f,  0.2f, -1.5f),
-    glm::vec3(-1.3f,  1.0f, -1.5f)
-    };
-    // positions of the point lights
-    glm::vec3 pointLightPositions[] = {
-        glm::vec3(0.7f,  0.2f,  2.0f),
-        glm::vec3(2.3f, -3.3f, -4.0f),
-        glm::vec3(-4.0f,  2.0f, -12.0f),
-        glm::vec3(0.0f,  0.0f, -3.0f)
-    };
+    // So, we have vertices, now we need to: 
+    // 1) put them into a Vertex Buffer object to store the data
+    // 2) configure a Vertex Array object to instruct the gpu how to interpret the data
+    // 3) Render the data
 
+    unsigned int VBO, VAO;
+    size_t bufferSize = sizeof(float) * vertices.size();
 
-    // first, configure the cube's VAO (and VBO)
-    unsigned int VBO, cubeVAO;
-    glGenVertexArrays(1, &cubeVAO);
-    glGenBuffers(1, &VBO);
+    // Create and populate VBO
+    // -----------------------
+    glCreateBuffers(1, &VBO);
+    glNamedBufferStorage(VBO, bufferSize, vertices.data(), GL_DYNAMIC_STORAGE_BIT);
 
-    glBindBuffer(GL_ARRAY_BUFFER, VBO);
-    glBufferData(GL_ARRAY_BUFFER, vertices.size()* sizeof(float), vertices.data(), GL_STATIC_DRAW);
+    // Creates a VAO and then binds the VBO to the VAO
+    // params -nBuffers, ptr->buffer
+    // -----------------------------------------------
+    glCreateVertexArrays(1, &VAO);
 
-    glBindVertexArray(cubeVAO);
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
-    glEnableVertexAttribArray(0);
-    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(3 * sizeof(float)));
-    glEnableVertexAttribArray(1);
-    glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6 * sizeof(float)));
-    glEnableVertexAttribArray(2);
+    // Here we tell openGL that the VBO is associated with
+    // index = bindingIndex = 0 of the VAO
+    // params - vaobj, bindingIndex, buffer, offset, stride
+    // ----------------------------------------------------
+    glVertexArrayVertexBuffer(VAO, 0, VBO, 0, 8 * sizeof(float));
 
-    // second, configure the light's VAO (VBO stays the same; the vertices are the same for the light object which is also a 3D cube)
-    unsigned int lightCubeVAO;
-    glGenVertexArrays(1, &lightCubeVAO);
-    glBindVertexArray(lightCubeVAO);
+    // Now, Instruct the api how to use the vertex data
+    // in the shader we set the layout variables, that is how
+    // the shader knows at (location = 0), lies the position data.
+    // ----------------------------------------------------------
+    glEnableVertexArrayAttrib(VAO, 0);
+    glEnableVertexArrayAttrib(VAO, 1);
+    glEnableVertexArrayAttrib(VAO, 2);
 
-    glBindBuffer(GL_ARRAY_BUFFER, VBO);
-    // note that we update the lamp's position attribute's stride to reflect the updated buffer data
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
-    glEnableVertexAttribArray(0);
+    glVertexArrayAttribFormat(VAO, 0, 3, GL_FLOAT, GL_FALSE, 0);
+    glVertexArrayAttribFormat(VAO, 1, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float));
+    glVertexArrayAttribFormat(VAO, 2, 2, GL_FLOAT, GL_FALSE, 6 * sizeof(float));
+    
+    // params- vaobj, attribindex, binding index
+    // here we use bindingIndex = 0 for all calls because they all come from the same vao
+    // ----------------------------------------------------------------------------------
+    glVertexArrayAttribBinding(VAO, 0, 0);
+    glVertexArrayAttribBinding(VAO, 1, 0);
+    glVertexArrayAttribBinding(VAO, 2, 0);
 
-    // load textures (we now use a utility function to keep the code more organized)
-    // -----------------------------------------------------------------------------
-    unsigned int diffuseMap = loadTexture("Resources/container2.png");
-    unsigned int specularMap = loadTexture("Resources/container2_specular.png");
-    unsigned int emissionMap = loadTexture("Resources/matrix.jpg");
-
-    // --------------------
-    basicColor.use();
-    basicColor.setInt("material.diffuse", 0);
-    basicColor.setInt("material.specular", 1);
-    // lightingShader.setInt("material.emission", 2);
-   
+    // so now the vbo and vao should be setup. 
 
     // render loop
     // -----------
@@ -120,70 +107,13 @@ int main()
         // -----
         processInput(window);
 
+
+        basicColor.use();
+
         // render
         // ------
         glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-        // be sure to activate shader when setting uniforms/drawing objects
-        basicColor.use();
-        basicColor.setVec3("viewPos", camera.Position);
-        basicColor.setFloat("material.shininess", 32.0f);
-
-        /*
-           Here we set all the uniforms for the 5/6 types of lights we have. We have to set them manually and index
-           the proper PointLight struct in the array to set each uniform variable. This can be done more code-friendly
-           by defining light types as classes and set their values in there, or by using a more efficient uniform approach
-           by using 'Uniform buffer objects', but that is something we'll discuss in the 'Advanced GLSL' tutorial.
-        */
-        // directional light
-        basicColor.setVec3("dirLight.direction", -0.2f, -1.0f, -0.3f);
-        basicColor.setVec3("dirLight.ambient", 0.05f, 0.05f, 0.05f);
-        basicColor.setVec3("dirLight.diffuse", 0.4f, 0.4f, 0.4f);
-        basicColor.setVec3("dirLight.specular", 0.5f, 0.5f, 0.5f);
-        // point light 1
-        basicColor.setVec3("pointLights[0].position", pointLightPositions[0]);
-        basicColor.setVec3("pointLights[0].ambient", 0.05f, 0.05f, 0.05f);
-        basicColor.setVec3("pointLights[0].diffuse", 0.8f, 0.8f, 0.8f);
-        basicColor.setVec3("pointLights[0].specular", 1.0f, 1.0f, 1.0f);
-        basicColor.setFloat("pointLights[0].constant", 1.0f);
-        basicColor.setFloat("pointLights[0].linear", 0.09f);
-        basicColor.setFloat("pointLights[0].quadratic", 0.032f);
-        // point light 2
-        basicColor.setVec3("pointLights[1].position", pointLightPositions[1]);
-        basicColor.setVec3("pointLights[1].ambient", 0.05f, 0.05f, 0.05f);
-        basicColor.setVec3("pointLights[1].diffuse", 0.8f, 0.8f, 0.8f);
-        basicColor.setVec3("pointLights[1].specular", 1.0f, 1.0f, 1.0f);
-        basicColor.setFloat("pointLights[1].constant", 1.0f);
-        basicColor.setFloat("pointLights[1].linear", 0.09f);
-        basicColor.setFloat("pointLights[1].quadratic", 0.032f);
-        // point light 3
-        basicColor.setVec3("pointLights[2].position", pointLightPositions[2]);
-        basicColor.setVec3("pointLights[2].ambient", 0.05f, 0.05f, 0.05f);
-        basicColor.setVec3("pointLights[2].diffuse", 0.8f, 0.8f, 0.8f);
-        basicColor.setVec3("pointLights[2].specular", 1.0f, 1.0f, 1.0f);
-        basicColor.setFloat("pointLights[2].constant", 1.0f);
-        basicColor.setFloat("pointLights[2].linear", 0.09f);
-        basicColor.setFloat("pointLights[2].quadratic", 0.032f);
-        // point light 4
-        basicColor.setVec3("pointLights[3].position", pointLightPositions[3]);
-        basicColor.setVec3("pointLights[3].ambient", 0.05f, 0.05f, 0.05f);
-        basicColor.setVec3("pointLights[3].diffuse", 0.8f, 0.8f, 0.8f);
-        basicColor.setVec3("pointLights[3].specular", 1.0f, 1.0f, 1.0f);
-        basicColor.setFloat("pointLights[3].constant", 1.0f);
-        basicColor.setFloat("pointLights[3].linear", 0.09f);
-        basicColor.setFloat("pointLights[3].quadratic", 0.032f);
-        // spotLight
-        basicColor.setVec3("spotLight.position", camera.Position);
-        basicColor.setVec3("spotLight.direction", camera.Front);
-        basicColor.setVec3("spotLight.ambient", 0.0f, 0.0f, 0.0f);
-        basicColor.setVec3("spotLight.diffuse", 1.0f, 1.0f, 1.0f);
-        basicColor.setVec3("spotLight.specular", 1.0f, 1.0f, 1.0f);
-        basicColor.setFloat("spotLight.constant", 1.0f);
-        basicColor.setFloat("spotLight.linear", 0.09f);
-        basicColor.setFloat("spotLight.quadratic", 0.032f);
-        basicColor.setFloat("spotLight.cutOff", glm::cos(glm::radians(12.5f)));
-        basicColor.setFloat("spotLight.outerCutOff", glm::cos(glm::radians(15.0f)));
 
         // view/projection transformations
         glm::mat4 projection = glm::perspective(glm::radians(camera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
@@ -195,43 +125,15 @@ int main()
         glm::mat4 model = glm::mat4(1.0f);
         basicColor.setMat4("model", model);
 
-        // bind diffuse map
-        glActiveTexture(GL_TEXTURE0);
-        glBindTexture(GL_TEXTURE_2D, diffuseMap);
-        // bind specular map
-        glActiveTexture(GL_TEXTURE1);
-        glBindTexture(GL_TEXTURE_2D, specularMap);
 
-        // render containers
-        glBindVertexArray(cubeVAO);
-        for (unsigned int i = 0; i < 10; i++)
-        {
-            // calculate the model matrix for each object and pass it to shader before drawing
+        glBindVertexArray(VAO);
+
+        for (int i = 0; i < 10; i++) {
             glm::mat4 model = glm::mat4(1.0f);
-            model = glm::translate(model, cubePositions[i]);
-            float angle = 20.0f * i;
-            model = glm::rotate(model, glm::radians(angle), glm::vec3(1.0f, 0.3f, 0.5f));
+            model = glm::translate(model, glm::vec3((float)i, (float)i, 0.0f));
             basicColor.setMat4("model", model);
-
             glDrawArrays(GL_TRIANGLES, 0, 36);
         }
-
-        // also draw the lamp object(s)
-        basicLight.use();
-        basicLight.setMat4("projection", projection);
-        basicLight.setMat4("view", view);
-
-        // we now draw as many light bulbs as we have point lights.
-        glBindVertexArray(lightCubeVAO);
-        for (unsigned int i = 0; i < 4; i++)
-        {
-            model = glm::mat4(1.0f);
-            model = glm::translate(model, pointLightPositions[i]);
-            model = glm::scale(model, glm::vec3(0.2f)); // Make it a smaller cube
-            basicLight.setMat4("model", model);
-            glDrawArrays(GL_TRIANGLES, 0, 36);
-        }
-
 
         // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
         // -------------------------------------------------------------------------------
@@ -249,8 +151,8 @@ int setUp() {
     // glfw: initialize and configure
     // ------------------------------
     glfwInit();
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 5);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
 #ifdef __APPLE__
@@ -288,6 +190,8 @@ int setUp() {
     // configure global opengl state
     // -----------------------------
     glEnable(GL_DEPTH_TEST);
+
+    return 1;
 }
 
 void cleanUp() {
