@@ -63,7 +63,7 @@ std::vector<float> Shapes::getCube() {
 }
 
 
-std::vector<Vertex> Shapes::getSquarePyramid() {
+std::vector<float> Shapes::getSquarePyramid() {
   
     std::vector<Vertex> pyramidVertices = {
         // Base of the pyramid (square)
@@ -77,10 +77,14 @@ std::vector<Vertex> Shapes::getSquarePyramid() {
     };
 
 
-    std::vector<float> retVec;
+    std::vector<float> ret;
+    ret.reserve(pyramidVertices.size() * (8)); // reserve space for efficency (openai)
 
-    for (int i = 0; i < 5; i++)
-        retVec.push_back(pyramidVertices[i].);
+    for (const auto& vertex : pyramidVertices) {
+        ret.insert(ret.end(), { vertex.position.x, vertex.position.y, vertex.position.z });
+        ret.insert(ret.end(), { vertex.normal.x, vertex.normal.y, vertex.normal.z });
+        ret.insert(ret.end(), { vertex.texCoords.x, vertex.texCoords.y });
+    }
 
-    return pyramidVertices;
+    return ret;
 }

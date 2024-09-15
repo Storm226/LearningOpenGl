@@ -16,6 +16,6 @@ public:
 
 	static std::vector<float> getCube();
 
-	static std::vector<Vertex> getSquarePyramid();
+	static std::vector<float> getSquarePyramid();
 
 };

@@ -48,7 +48,7 @@ int main()
 
 
     // alex i think the return format is not good
-    std::vector<Vertex> vertices = Shapes::getSquarePyramid();
+    std::vector<float> vertices = Shapes::getSquarePyramid();
 
     
 
@@ -113,7 +113,6 @@ int main()
 
 
         basicColor.use();
-
 
         
         // render
