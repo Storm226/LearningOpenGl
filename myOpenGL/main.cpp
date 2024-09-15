@@ -46,7 +46,11 @@ int main()
     Shader basicColor("Shaders/Basic/colors.vs", "Shaders/Basic/colors.fs");
     Shader basicLight("Shaders/Basic/lights.vs", "Shaders/Basic/lights.fs");
 
-    std::vector<float> vertices = Shapes::getCube();
+
+    // alex i think the return format is not good
+    std::vector<Vertex> vertices = Shapes::getSquarePyramid();
+
+    
 
     // So, we have vertices, now we need to: 
     // 1) put them into a Vertex Buffer object to store the data
@@ -130,14 +134,8 @@ int main()
 
         glBindVertexArray(VAO);
 
-        for (int i = 0; i < 10; i++) {
-            glm::mat4 model = glm::mat4(1.0f);
-            model = glm::scale(model, glm::vec3(1.0f, 1.0f, 5.0f));
-            model = glm::translate(model, glm::vec3((float)i, (float)i, 0.0f));
-            basicColor.setMat4("model", model);
-            glDrawArrays(GL_TRIANGLES, 0, 36);
-        }
-
+        glDrawArrays(GL_TRIANGLES, 0, 5);
+     
         // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
         // -------------------------------------------------------------------------------
         glfwSwapBuffers(window);

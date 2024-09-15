@@ -1,5 +1,5 @@
 #include "include/Shapes.h"
-
+#include <glm/glm.hpp>
 
 
 /// <summary>
@@ -60,4 +60,27 @@ std::vector<float> Shapes::getCube() {
 
 
     return vertices;
+}
+
+
+std::vector<Vertex> Shapes::getSquarePyramid() {
+  
+    std::vector<Vertex> pyramidVertices = {
+        // Base of the pyramid (square)
+        { glm::vec3(-1.0f, -1.0f,  1.0f), glm::vec3(0.0f, -1.0f,  0.0f), glm::vec2(0.0f, 0.0f) }, // Bottom-left
+        { glm::vec3(1.0f, -1.0f,  1.0f), glm::vec3(0.0f, -1.0f,  0.0f), glm::vec2(1.0f, 0.0f) }, // Bottom-right
+        { glm::vec3(1.0f, -1.0f, -1.0f), glm::vec3(0.0f, -1.0f,  0.0f), glm::vec2(1.0f, 1.0f) }, // Top-right
+        { glm::vec3(-1.0f, -1.0f, -1.0f), glm::vec3(0.0f, -1.0f,  0.0f), glm::vec2(0.0f, 1.0f) }, // Top-left
+
+        // Apex of the pyramid
+        { glm::vec3(0.0f,  1.0f,  0.0f), glm::vec3(0.0f,  1.0f,  0.0f), glm::vec2(0.5f, 0.5f) }, // Apex (top)
+    };
+
+
+    std::vector<float> retVec;
+
+    for (int i = 0; i < 5; i++)
+        retVec.push_back(pyramidVertices[i].);
+
+    return pyramidVertices;
 }
