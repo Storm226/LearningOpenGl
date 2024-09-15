@@ -110,6 +110,8 @@ int main()
 
         basicColor.use();
 
+
+        
         // render
         // ------
         glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
@@ -130,6 +132,7 @@ int main()
 
         for (int i = 0; i < 10; i++) {
             glm::mat4 model = glm::mat4(1.0f);
+            model = glm::scale(model, glm::vec3(1.0f, 1.0f, 5.0f));
             model = glm::translate(model, glm::vec3((float)i, (float)i, 0.0f));
             basicColor.setMat4("model", model);
             glDrawArrays(GL_TRIANGLES, 0, 36);

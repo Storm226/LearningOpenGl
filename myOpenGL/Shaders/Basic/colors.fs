@@ -1,5 +1,6 @@
 #version 330 core
 out vec4 FragColor;
+in vec3 Color;
 
 struct Material {
     sampler2D diffuse;
@@ -79,7 +80,7 @@ void main()
     // phase 3: spot light
     result += CalcSpotLight(spotLight, norm, FragPos, viewDir);    
     
-    FragColor = vec4(result, 1.0);
+    FragColor = vec4(Color,0.0f);
 }
 
 // calculates the color when using a directional light.
