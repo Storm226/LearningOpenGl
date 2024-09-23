@@ -1,5 +1,6 @@
 #include "include/Shapes.h"
 #include <glm/glm.hpp>
+#include <iostream>
 
 
 /// <summary>
@@ -56,15 +57,11 @@ std::vector<float> Shapes::getCube() {
         -0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f,  0.0f,  1.0f
     };
 
-
-
-
     return vertices;
 }
 
 
 std::vector<float> Shapes::getSquarePyramid() {
-  
     std::vector<Vertex> pyramidVertices = {
         // Base of the pyramid (square)
         { glm::vec3(-1.0f, -1.0f,  1.0f), glm::vec3(0.0f, -1.0f,  0.0f), glm::vec2(0.0f, 0.0f) }, // Bottom-left
@@ -76,7 +73,6 @@ std::vector<float> Shapes::getSquarePyramid() {
         { glm::vec3(0.0f,  1.0f,  0.0f), glm::vec3(0.0f,  1.0f,  0.0f), glm::vec2(0.5f, 0.5f) }, // Apex (top)
     };
 
-
     std::vector<float> ret;
     ret.reserve(pyramidVertices.size() * (8)); // reserve space for efficency (openai)
 
@@ -86,5 +82,6 @@ std::vector<float> Shapes::getSquarePyramid() {
         ret.insert(ret.end(), { vertex.texCoords.x, vertex.texCoords.y });
     }
 
+    std::cout << ret.data() << std::endl;
     return ret;
 }
