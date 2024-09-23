@@ -28,6 +28,10 @@ float lastX = SCR_WIDTH / 2.0f;
 float lastY = SCR_HEIGHT / 2.0f;
 bool firstMouse = true;
 
+// Frustum stuff
+float nearPlane = 0.01f;
+float farPlane = 1000.0f;
+
 // timing
 float deltaTime = 0.0f;
 float lastFrame = 0.0f;
@@ -145,19 +149,41 @@ int main()
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         // view/projection transformations
-        glm::mat4 projection = glm::perspective(glm::radians(camera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
-        glm::mat4 view = camera.GetViewMatrix();
+      
+
+        glm::mat4 projection = glm::perspective(glm::radians(camera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, nearPlane, farPlane);
+       // glm::mat4 view = camera.GetViewMatrix();
         basicColor.setMat4("projection", projection);
-        basicColor.setMat4("view", view);
+     //   basicColor.setMat4("view", view);
 
         // world transformation
-        glm::mat4 model = glm::mat4(1.0f);
-        basicColor.setMat4("model", model);
-
+        //glm::mat4 model = glm::mat4(1.0f);
+        //basicColor.setMat4("model", model);
 
         glBindVertexArray(VAO);
+        for (int i = 0; i < 25; i++) {
 
-        glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, 0);
+            glm::mat4 model = glm::mat4(1.0f);
+            model = glm::scale(model, glm::vec3(i));
+            model = glm::translate(model, glm::vec3(i + 5, 1, 0));
+            basicColor.setMat4("model", model);
+
+
+            glm::mat4 view = camera.GetViewMatrix();
+            basicColor.setMat4("view", view);
+
+
+            glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, 0);
+
+
+        }
+
+
+
+        /*glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, 0);
+        model = glm::translate(model, glm::vec3(10.0f, 0.0f, 0.0f));
+        basicColor.setMat4("model", model);
+        glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, 0);*/
 
         // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
         // -------------------------------------------------------------------------------
