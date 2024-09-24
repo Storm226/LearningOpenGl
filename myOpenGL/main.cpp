@@ -23,7 +23,7 @@ const unsigned int SCR_HEIGHT = 1080;
 GLFWwindow* window;
 
 // camera
-Camera camera(glm::vec3(0.0f, 0.0f, 3.0f));
+Camera camera(glm::vec3(30.0f, 0.0f, 90.0f));
 float lastX = SCR_WIDTH / 2.0f;
 float lastY = SCR_HEIGHT / 2.0f;
 bool firstMouse = true;
@@ -160,24 +160,30 @@ int main()
         //glm::mat4 model = glm::mat4(1.0f);
         //basicColor.setMat4("model", model);
 
+     
+
         glBindVertexArray(VAO);
-        for (int i = 0; i < 25; i++) {
 
-            glm::mat4 model = glm::mat4(1.0f);
-            model = glm::scale(model, glm::vec3(i));
-            model = glm::translate(model, glm::vec3(i + 5, 1, 0));
-            basicColor.setMat4("model", model);
-
-
-            glm::mat4 view = camera.GetViewMatrix();
-            basicColor.setMat4("view", view);
-
-
-            glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, 0);
+            for (float j = 0; j < 10; j++) {
+                glm::mat4 model = glm::mat4(1.0f);
+                model = glm::scale(model, glm::vec3(j));
+                model = glm::translate(model, glm::vec3(j + 5.0f, 1.0f, 0.0f));
+                basicColor.setMat4("model", model);
+                glm::mat4 view = camera.GetViewMatrix();
+                basicColor.setMat4("view", view);
+                glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, 0);
+            }
 
 
-        }
-
+            for (float j = 0; j < 10; j++) {
+                glm::mat4 model = glm::mat4(1.0f);
+                model = glm::scale(model, glm::vec3(j));
+                model = glm::translate(model, glm::vec3(-j - 5.0f, 1.0f, 0.0f));
+                basicColor.setMat4("model", model);
+                glm::mat4 view = camera.GetViewMatrix();
+                basicColor.setMat4("view", view);
+                glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, 0);
+            }
 
 
         /*glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, 0);
