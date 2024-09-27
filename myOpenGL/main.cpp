@@ -166,8 +166,8 @@ int main()
 
             for (float j = 0; j < 10; j++) {
                 glm::mat4 model = glm::mat4(1.0f);
+                model = glm::translate(model, glm::vec3((j*j) + 25.0f, j, 0.0f));
                 model = glm::scale(model, glm::vec3(j));
-                model = glm::translate(model, glm::vec3(j + 5.0f, 1.0f, 0.0f));
                 basicColor.setMat4("model", model);
                 glm::mat4 view = camera.GetViewMatrix();
                 basicColor.setMat4("view", view);
@@ -175,15 +175,15 @@ int main()
             }
 
 
-            for (float j = 0; j < 10; j++) {
+       /*     for (float j = 0; j < 10; j++) {
                 glm::mat4 model = glm::mat4(1.0f);
                 model = glm::scale(model, glm::vec3(j));
-                model = glm::translate(model, glm::vec3(-j - 5.0f, 1.0f, 0.0f));
+                model = glm::translate(model, glm::vec3(j + 5.0f, 1.0f, 15.0f));
                 basicColor.setMat4("model", model);
                 glm::mat4 view = camera.GetViewMatrix();
                 basicColor.setMat4("view", view);
                 glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, 0);
-            }
+            }*/
 
 
         /*glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, 0);
